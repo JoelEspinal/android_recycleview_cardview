@@ -9,7 +9,10 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.util.List;
+
 import geskep.com.abc.R;
+import geskep.com.abc.models.Citation;
 
 /**
  * Created by User on 10/5/2017.
@@ -18,19 +21,26 @@ import geskep.com.abc.R;
 public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
 
     String [] mDataset;
+    List<Citation> mQuotes;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView mTitle;
+        public TextView mContent;
 
         public ViewHolder(View view) {
             super(view);
             mTitle = (TextView) view.findViewById(R.id.title);
+            mContent = (TextView) view.findViewById(R.id.quote);
         }
     }
 
     public MyAdapter(String[] myDataset) {
         mDataset = myDataset;
+    }
+
+    public MyAdapter(List<Citation> quotes){
+        mQuotes = quotes;
     }
 
     @Override
@@ -49,13 +59,17 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.mTitle.setText(mDataset[position]);
 
-    }
+        //holder.mTitle.setText(mDataset[position]);
+
+        holder.mTitle.setText(Integer.toString(mQuotes.get(position).getNumber()) + ". ");
+        holder.mContent.setText(mQuotes.get(position).getCitation());
+     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.length;
+        //return mDataset.length;
+        return mQuotes.size();
     }
 }
